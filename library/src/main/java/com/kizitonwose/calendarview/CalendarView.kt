@@ -8,7 +8,6 @@ import androidx.annotation.Px
 import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kizitonwose.calendarview.CalendarView.Companion.DAY_SIZE_SQUARE
 import com.kizitonwose.calendarview.model.*
 import com.kizitonwose.calendarview.ui.*
 import com.kizitonwose.calendarview.utils.Size
@@ -246,7 +245,7 @@ open class CalendarView : RecyclerView {
     private var firstDayOfWeek: DayOfWeek? = null
 
     private var autoSize = true
-    private var autoSizeHeight = DAY_SIZE_SQUARE
+    private var autoSizeHeight = SQUARE
     private var sizedInternally = false
 
     internal val isVertical: Boolean
@@ -302,7 +301,7 @@ open class CalendarView : RecyclerView {
             // +0.5 => round to the nearest pixel
             val size = (((widthSize - (monthPaddingStart + monthPaddingEnd)) / weekdays.size.toFloat()) + 0.5).toInt()
 
-            val height = if (autoSizeHeight == DAY_SIZE_SQUARE) size else autoSizeHeight
+            val height = if (autoSizeHeight == SQUARE) size else autoSizeHeight
             val computedSize = daySize.copy(width = size, height = height)
             if (daySize != computedSize) {
                 sizedInternally = true
@@ -315,44 +314,6 @@ open class CalendarView : RecyclerView {
     }
 
     /**
-     * The width, in pixels for each day cell view.
-     * Set this to [DAY_SIZE_SQUARE] to have a nice
-     * square item view.
-     *
-     * @see [DAY_SIZE_SQUARE]
-     */
-    @Px
-    @Deprecated(
-        "The new `daySize` property clarifies how cell sizing should be done.",
-        replaceWith = ReplaceWith("daySize")
-    )
-    var dayWidth: Int = DAY_SIZE_SQUARE
-        get() = daySize.width
-        set(value) {
-            field = value
-            daySize = Size(field, dayHeight)
-        }
-
-    /**
-     * The height, in pixels for each day cell view.
-     * Set this to [DAY_SIZE_SQUARE] to have a nice
-     * square item view.
-     *
-     * @see [DAY_SIZE_SQUARE]
-     */
-    @Px
-    @Deprecated(
-        "The new `daySize` property clarifies how cell sizing should be done.",
-        replaceWith = ReplaceWith("daySize")
-    )
-    var dayHeight: Int = DAY_SIZE_SQUARE
-        get() = daySize.height
-        set(value) {
-            field = value
-            daySize = Size(dayWidth, field)
-        }
-
-    /**
      * The size in pixels for each day cell view.
      * Set this to [SIZE_SQUARE] to have a nice
      * square item view.
@@ -363,7 +324,7 @@ open class CalendarView : RecyclerView {
         set(value) {
             field = value
             if (!sizedInternally) {
-                autoSize = value == SIZE_SQUARE || value.width == DAY_SIZE_SQUARE
+                autoSize = value == SIZE_SQUARE || value.width == SQUARE
                 autoSizeHeight = value.height
                 invalidateViewHolders()
             }
@@ -375,14 +336,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthPaddingStart = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthPadding")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The padding, in pixels to be applied
@@ -390,14 +344,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthPaddingEnd = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthPadding")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The padding, in pixels to be applied
@@ -405,14 +352,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthPaddingTop = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthPadding")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The padding, in pixels to be applied
@@ -420,14 +360,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthPaddingBottom = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthPadding")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The margin, in pixels to be applied
@@ -435,14 +368,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthMarginStart = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthMargins")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The margin, in pixels to be applied
@@ -450,14 +376,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthMarginEnd = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthMargins")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The margin, in pixels to be applied
@@ -465,14 +384,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthMarginTop = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthMargins")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     /**
      * The margin, in pixels to be applied
@@ -480,14 +392,7 @@ open class CalendarView : RecyclerView {
      */
     @Px
     var monthMarginBottom = 0
-        @Deprecated(
-            "Directly setting this along with related properties causes repeated invalidation of view holders.",
-            replaceWith = ReplaceWith("setMonthMargins")
-        )
-        set(value) {
-            field = value
-            invalidateViewHolders()
-        }
+        private set
 
     private val calendarLayoutManager: CalendarLayoutManager
         get() = layoutManager as CalendarLayoutManager
@@ -597,12 +502,10 @@ open class CalendarView : RecyclerView {
         @Px end: Int = monthPaddingEnd,
         @Px bottom: Int = monthPaddingBottom
     ) {
-        internalConfigUpdate = true
         monthPaddingStart = start
         monthPaddingTop = top
         monthPaddingEnd = end
         monthPaddingBottom = bottom
-        internalConfigUpdate = false
         invalidateViewHolders()
     }
 
@@ -617,12 +520,10 @@ open class CalendarView : RecyclerView {
         @Px end: Int = monthMarginEnd,
         @Px bottom: Int = monthMarginBottom
     ) {
-        internalConfigUpdate = true
         monthMarginStart = start
         monthMarginTop = top
         monthMarginEnd = end
         monthMarginBottom = bottom
-        internalConfigUpdate = false
         invalidateViewHolders()
     }
 
@@ -762,9 +663,9 @@ open class CalendarView : RecyclerView {
     }
 
     /**
-     * Setup the CalendarView. You can call this any time to change the
-     * the desired [startMonth], [endMonth] or [firstDayOfWeek] on the Calendar.
-     * See [updateMonthRange] and [updateMonthRangeAsync] for more refined updates.
+     * Setup the CalendarView.
+     * See [updateMonthRange] and [updateMonthRangeAsync] to change
+     * the [startMonth] and [endMonth] values.
      *
      * @param startMonth The first month on the calendar.
      * @param endMonth The last month on the calendar.
@@ -772,27 +673,22 @@ open class CalendarView : RecyclerView {
      */
     fun setup(startMonth: YearMonth, endMonth: YearMonth, firstDayOfWeek: DayOfWeek) {
         configJob?.cancel()
-        if (this.startMonth != null && this.endMonth != null && this.firstDayOfWeek != null) {
-            this.firstDayOfWeek = firstDayOfWeek
-            updateMonthRange(startMonth, endMonth)
-        } else {
-            this.startMonth = startMonth
-            this.endMonth = endMonth
-            this.firstDayOfWeek = firstDayOfWeek
-            finishSetup(
-                MonthConfig(
-                    outDateStyle, inDateStyle, maxRowCount, startMonth,
-                    endMonth, firstDayOfWeek, weekdays, hasBoundaries, Job()
-                )
+        this.startMonth = startMonth
+        this.endMonth = endMonth
+        this.firstDayOfWeek = firstDayOfWeek
+        finishSetup(
+            MonthConfig(
+                outDateStyle, inDateStyle, maxRowCount, startMonth,
+                endMonth, firstDayOfWeek, weekdays, hasBoundaries, Job()
             )
-        }
+        )
     }
 
     /**
-     * Setup the CalendarView, asynchronously. You can call this any time to change the
-     * the desired [startMonth], [endMonth] or [firstDayOfWeek] on the Calendar.
+     * Setup the CalendarView, asynchronously.
      * Useful if your [startMonth] and [endMonth] values are many years apart.
-     * See [updateMonthRange] and [updateMonthRangeAsync] for more refined updates.
+     * See [updateMonthRange] and [updateMonthRangeAsync] to change the
+     * [startMonth] and [endMonth] values.
      *
      * Note: the setup MUST finish before any other methods can are called. To be
      * notified when the setup is finished, provide a [completion] parameter.
@@ -809,22 +705,17 @@ open class CalendarView : RecyclerView {
         completion: Completion? = null
     ) {
         configJob?.cancel()
-        if (this.startMonth != null && this.endMonth != null && this.firstDayOfWeek != null) {
-            this.firstDayOfWeek = firstDayOfWeek
-            updateMonthRangeAsync(startMonth, endMonth, completion)
-        } else {
-            this.startMonth = startMonth
-            this.endMonth = endMonth
-            this.firstDayOfWeek = firstDayOfWeek
-            configJob = GlobalScope.launch {
-                val monthConfig = MonthConfig(
-                    outDateStyle, inDateStyle, maxRowCount, startMonth,
-                    endMonth, firstDayOfWeek, weekdays, hasBoundaries, job
-                )
-                withContext(Main) {
-                    finishSetup(monthConfig)
-                    completion?.invoke()
-                }
+        this.startMonth = startMonth
+        this.endMonth = endMonth
+        this.firstDayOfWeek = firstDayOfWeek
+        configJob = GlobalScope.launch {
+            val monthConfig = MonthConfig(
+                outDateStyle, inDateStyle, maxRowCount, startMonth,
+                endMonth, firstDayOfWeek, weekdays, hasBoundaries, job
+            )
+            withContext(Main) {
+                finishSetup(monthConfig)
+                completion?.invoke()
             }
         }
     }
@@ -840,28 +731,6 @@ open class CalendarView : RecyclerView {
             monthConfig
         )
     }
-
-    /**
-     * Update the CalendarView's start month.
-     * This can be called only if you have called [setup] in the past.
-     * See [updateEndMonth] and [updateMonthRange].
-     */
-    @Deprecated(
-        "This helper method will be removed to clean up the library's API.",
-        ReplaceWith("updateMonthRange()")
-    )
-    fun updateStartMonth(startMonth: YearMonth) = updateMonthRange(startMonth, requireEndMonth())
-
-    /**
-     * Update the CalendarView's end month.
-     * This can be called only if you have called [setup] in the past.
-     * See [updateStartMonth] and [updateMonthRange].
-     */
-    @Deprecated(
-        "This helper method will be removed to clean up the library's API.",
-        ReplaceWith("updateMonthRange()")
-    )
-    fun updateEndMonth(endMonth: YearMonth) = updateMonthRange(requireStartMonth(), endMonth)
 
     /**
      * Update the CalendarView's start and end months.
@@ -963,28 +832,19 @@ open class CalendarView : RecyclerView {
     }
 
     companion object {
-        /**
-         * A value for [dayWidth] and [dayHeight] which indicates that the day
-         * cells should have equal width and height. Each view's width and height
-         * will be the width of the calender divided by 7.
-         */
-        @Deprecated(
-            "The new `daySize` property clarifies how cell sizing should be done.",
-            replaceWith = ReplaceWith("CalendarView.SIZE_SQUARE")
-        )
-        const val DAY_SIZE_SQUARE = Int.MIN_VALUE
+        private const val SQUARE = Int.MIN_VALUE
 
         /**
          * A value for [daySize]  which indicates that the day cells should
          * have equal width and height. Each view's width and height will
          * be the width of the calender divided by 7.
          */
-        val SIZE_SQUARE = Size(DAY_SIZE_SQUARE, DAY_SIZE_SQUARE)
+        val SIZE_SQUARE = Size(SQUARE, SQUARE)
 
         /**
          * A value for [daySize] which indicates that the day cells should
          * have width of the calender divided by 7 and provided height.
          */
-        fun sizeAutoWidth(@Px height: Int) = Size(DAY_SIZE_SQUARE, height)
+        fun sizeAutoWidth(@Px height: Int) = Size(SQUARE, height)
     }
 }
