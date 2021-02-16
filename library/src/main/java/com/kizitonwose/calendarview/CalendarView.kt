@@ -286,6 +286,7 @@ open class CalendarView : RecyclerView {
                 wrappedPageHeightAnimationDuration
             )
         }
+        check(dayViewResource != 0) { "No value set for `cv_dayViewResource` attribute." }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -609,10 +610,10 @@ open class CalendarView : RecyclerView {
 
     /**
      * Notify the CalendarView to reload all months.
-     * Essentially calls [RecyclerView.Adapter.notifyDataSetChanged] on the adapter.
+     * Just like calling [notifyMonthChanged] for all months.
      */
     fun notifyCalendarChanged() {
-        calendarAdapter.notifyDataSetChanged()
+        calendarAdapter.reloadCalendar()
     }
 
     /**
